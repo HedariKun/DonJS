@@ -1,2 +1,2 @@
 # TootJS
-Mastdon API wrapper to create Bots
+a library to create bots in mastodon
