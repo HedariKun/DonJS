@@ -1,5 +1,6 @@
 const axios = require("axios");
 const {Status} = require("./objects/status");
+const {Account} = require("./objects/account");
 
 let instance;
 
@@ -30,6 +31,39 @@ class Mastodon {
             throw expect;
         }
     }
+
+    async getClientAccount() {
+        const request = {
+            method: "GET",
+            url: `${this.apiURL}/api/v1/accounts/verify_credentials`,
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        }
+        try {
+            const account = await axios(request);
+            return new Account(account.data);
+        } catch (expect) {
+            throw expect;
+        }
+    }
+
+    async followAccount(uri) {
+        const request = {
+            method: "POST",
+            url: `${this.apiURL}/api/v1/follows`,
+            data: {uri},
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        }
+        try {
+            const account = await axios(request);
+            return new Account(account.data);
+        } catch (expect) {
+            throw expect;
+        }
+    } 
 }
 
 module.exports = {
