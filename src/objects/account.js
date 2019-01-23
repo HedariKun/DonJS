@@ -218,6 +218,24 @@ class Account {
         }
     }
 
+    async getRelationships() {
+        const instance = require("../mastodon").Mastodon.getInstance();
+        const request = {
+            method: "GET",
+            url: `${instance.apiURL}/api/v1/accounts/relationships`,
+            data: {id: this.id},
+            headers: {
+                'Authorization': `Bearer ${instance.token}`
+            }
+        }
+        try {
+            const relationships = await axios(request);
+            return relationships.data[0] == null ? null : new Relationship(relationships.data[0]);
+        } catch (expect) {
+            throw expect;
+        }
+    }
+
 }
 
 module.exports = {
