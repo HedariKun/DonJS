@@ -1,4 +1,5 @@
 const {Emoji} = require("./emoji"),
+      {Relationship} = require("./relationship")
       axios = require("axios");
 
 class Account {
@@ -27,23 +28,6 @@ class Account {
         this.bot = data.bot;
     }
     
-    async followAccount() {
-        const instance = require("../mastodon").Mastodon.getInstance();
-        const request = {
-            method: "POST",
-            url: `${instance.apiURL}/api/v1/follows`,
-            data: {uri:this.acct},
-            headers: {
-                'Authorization': `Bearer ${instance.token}`
-            }
-        }
-        try {
-            const account = await axios(request);
-            return new Account(account.data);
-        } catch (expect) {
-            throw expect;
-        }
-    }
 
     async getFollowers(limit = 40) {
         const instance = require("../mastodon").Mastodon.getInstance();
@@ -91,6 +75,144 @@ class Account {
         try {
             const status = await axios(request);
             return status.data.map(x => new (require("./status")).Status(x));
+        } catch (expect) {
+            throw expect;
+        }
+    }
+
+    async followAccount(showReblog = false) {
+        const instance = require("../mastodon").Mastodon.getInstance();
+        const request = {
+            method: "POST",
+            url: `${instance.apiURL}/api/v1/accounts/${this.id}/follow`,
+            data: {reblogs: showReblog},
+            headers: {
+                'Authorization': `Bearer ${instance.token}`
+            }
+        }
+        try {
+            const relationship = await axios(request);
+            return new Relationship(relationship.data);
+        } catch (expect) {
+            throw expect;
+        }
+    }
+    
+    async unfollowAccount() {
+        const instance = require("../mastodon").Mastodon.getInstance();
+        const request = {
+            method: "POST",
+            url: `${instance.apiURL}/api/v1/accounts/${this.id}/unfollow`,
+            headers: {
+                'Authorization': `Bearer ${instance.token}`
+            }
+        }
+        try {
+            const relationship = await axios(request);
+            return new Relationship(relationship.data);
+        } catch (expect) {
+            throw expect;
+        }
+    }
+
+    async blockAccount() {
+        const instance = require("../mastodon").Mastodon.getInstance();
+        const request = {
+            method: "POST",
+            url: `${instance.apiURL}/api/v1/accounts/${this.id}/block`,
+            headers: {
+                'Authorization': `Bearer ${instance.token}`
+            }
+        }
+        try {
+            const relationship = await axios(request);
+            return new Relationship(relationship.data);
+        } catch (expect) {
+            throw expect;
+        }
+    }
+
+    async unblockAccount() {
+        const instance = require("../mastodon").Mastodon.getInstance();
+        const request = {
+            method: "POST",
+            url: `${instance.apiURL}/api/v1/accounts/${this.id}/unblock`,
+            headers: {
+                'Authorization': `Bearer ${instance.token}`
+            }
+        }
+        try {
+            const relationship = await axios(request);
+            return new Relationship(relationship.data);
+        } catch (expect) {
+            throw expect;
+        }
+    }
+
+    async endorsingAccount() {
+        const instance = require("../mastodon").Mastodon.getInstance();
+        const request = {
+            method: "POST",
+            url: `${instance.apiURL}/api/v1/accounts/${this.id}/pin`,
+            headers: {
+                'Authorization': `Bearer ${instance.token}`
+            }
+        }
+        try {
+            const relationship = await axios(request);
+            return new Relationship(relationship.data);
+        } catch (expect) {
+            throw expect;
+        }
+    }
+
+    async unendorsingAccount() {
+        const instance = require("../mastodon").Mastodon.getInstance();
+        const request = {
+            method: "POST",
+            url: `${instance.apiURL}/api/v1/accounts/${this.id}/unpin`,
+            headers: {
+                'Authorization': `Bearer ${instance.token}`
+            }
+        }
+        try {
+            const relationship = await axios(request);
+            return new Relationship(relationship.data);
+        } catch (expect) {
+            throw expect;
+        }
+    }
+
+    async muteAccount (muteNotification=true) {
+        const instance = require("../mastodon").Mastodon.getInstance();
+        const request = {
+            method: "POST",
+            url: `${instance.apiURL}/api/v1/accounts/${this.id}/mute`,
+            data: {notifications: muteNotification},
+            headers: {
+                'Authorization': `Bearer ${instance.token}`
+            }
+        }
+        try {
+            const relationship = await axios(request);
+            return new Relationship(relationship.data);
+        } catch (expect) {
+            throw expect;
+        }
+    }
+
+    async unmuteAccount () {
+        const instance = require("../mastodon").Mastodon.getInstance();
+        const request = {
+            method: "POST",
+            url: `${instance.apiURL}/api/v1/accounts/${this.id}/unmute`,
+            headers: {
+                'Authorization': `Bearer ${instance.token}`
+            }
+        }
+        try {
+            const relationship = await axios(request);
+            return new Relationship(relationship.data);
         } catch (expect) {
             throw expect;
         }

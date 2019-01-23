@@ -48,7 +48,23 @@ class Mastodon {
         }
     }
 
-    async followAccount(uri) {
+    async getAccountByID (id) {
+        const request = {
+            method: "GET",
+            url: `${this.apiURL}/api/v1/accounts/${id}`,
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        }
+        try {
+            const account = await axios(request);
+            return new Account(account.data);
+        } catch (expect) {
+            throw expect;
+        }    
+    }
+
+    async followRemoteAccount(uri) {
         const request = {
             method: "POST",
             url: `${this.apiURL}/api/v1/follows`,
