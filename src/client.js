@@ -7,9 +7,9 @@ const axios = require("axios"),
 let instance;
 
 class Client {
-    constructor(config) {
-        this.apiUrl = config.apiUrl;
-        this.token = config.token;
+    constructor(token, apiUrl) {
+        this.apiUrl = apiUrl;
+        this.token = token;
         instance = this;
     }
 

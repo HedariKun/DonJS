@@ -2,8 +2,8 @@
 
 const Client = require("./src/client");
 
-function Mastodon(apiUrl, token) {
-    return new Client({apiUrl, token});
+function Mastodon(token, apiUrl) {
+    return new Client(token, apiUrl);
 }
 
 Mastodon.Status = require("./src/entities/status");

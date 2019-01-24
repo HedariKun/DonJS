@@ -85,6 +85,19 @@ declare module "danjs" {
 
     }
 
+
+    export class Client {
+        constructor(token:String, apiUrl:String);
+        public getInstance() : Client;
+        public sendStatus(status:String, attachments:[IAttachment], sensitive:Boolean, spoiler:Boolean): Promise<Status>;
+        public getClientAccount():Promise<Account>;
+        public getAccountByID(id:Number):Promise<Account>;
+        public followRemoteAccount(uri:String):Promise<Account>;
+        public uploadMedia(stream:String, description:String):Promise<IAttachment>;//Edit this in future
+        public updateMedia(id:Number, description:String):Promise<IAttachment>;
+        public getStatusByID(id:Number):Promise<Status>;
+    }
+
     export class Status implements IStatus{
         id: Number;    uri: String;
         url: String;
