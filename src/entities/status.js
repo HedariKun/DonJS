@@ -4,6 +4,9 @@ const {Account} = require("./account"),
       {Mention} = require("./mention"),
       {Tag} = require("./tag"),
       {Application} = require("./application"),
+      {Report} = require("./report"),
+      {Context} = require("./context"),
+      {Card} = require("./card"),
       axios = require("axios");
 
 class Status {
@@ -216,7 +219,59 @@ class Status {
             throw expect;
         }
     }
+
+    async report(comment) {
+        const instance = require("../mastodon").Mastodon.getInstance();
+        const request = {
+            method: "POST",
+            url: `${instance.apiURL}/api/v1/reports`,
+            data: {
+                'account_id': this.account.id,
+                'status_ids': [this.id],
+                comment
+            },
+            headers: {
+                'Authorization': `Bearer ${instance.token}`
+            }
+        }
+        try {
+            const report = await axios(request);
+            return new Report(report.data);
+        } catch (expect) {
+            throw expect;
+        }
+    }
+
+    async getContext() {
+        const instance = require("../mastodon").Mastodon.getInstance();
+        const request = {
+            method: "GET",
+            url: `${instance.apiURL}/api/v1/statuses/${this.id}/context`
+        }
+        try {
+            const context = await axios(request);
+            return new Context(context.data);
+        } catch(expect) {
+            throw expect;
+        }
+    }
     
+    async getCard() {
+        const instance = require("../mastodon").Mastodon.getInstance();
+
+        const request = {
+            method: "GET",
+            url: `${instance.apiURL}/api/v1/statuses/${this.id}/card`
+        }
+        try {
+            const card = await axios(request);
+            console.log(request.url);
+            return new Card(card.data);
+        } catch(expect) {
+            throw expect;
+        }
+    }
+
 }
 
 module.exports = {

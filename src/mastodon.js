@@ -51,7 +51,7 @@ class Mastodon {
         }
     }
 
-    async getAccountByID (id) {
+    async getAccountByID(id) {
         const request = {
             method: "GET",
             url: `${this.apiURL}/api/v1/accounts/${id}`,
@@ -119,6 +119,20 @@ class Mastodon {
             const attachment = await axios(request);
             return new Attachment(attachment.data);
         } catch(expect) {
+            throw expect;
+        }
+    }
+
+    async getStatusByID(id) {
+        const request = {
+            method: "GET",
+            url: `${this.apiURL}/api/v1/statuses/${id}`,
+        }
+
+        try {
+            const status = await axios(request);
+            return new Status(status.data);
+        } catch (expect) {
             throw expect;
         }
     }
