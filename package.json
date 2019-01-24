@@ -1,5 +1,5 @@
 {
-  "name": "tootjs",
+  "name": "donjs",
   "version": "0.1.0",
   "description": "NodeJS Mastodon Library",
   "main": "./index.js",
