@@ -1,6 +1,8 @@
-const axios = require("axios");
-const {Status} = require("./objects/status");
-const {Account} = require("./objects/account");
+const axios = require("axios"),
+     {Status} = require("./entities/status"),
+     {Account} = require("./entities/account"),
+     {Attachment} = require("./entities/attachment"),
+     formData = require("form-data");
 
 let instance;
 
@@ -15,11 +17,12 @@ class Mastodon {
         return instance;
     }
 
-    async sendStatus(status, sensitive = false, spoiler = false) {
+    async sendStatus(status, attachments=null, sensitive = false, spoiler = false) {
+        const mediasID = attachments === null ? [] : attachments.map(x => x.id);
         const request = {
             method: "POST",
             url: `${this.apiURL}/api/v1/statuses`,
-            data: {status, sensitive, spoiler_text: spoiler},
+            data: {status, sensitive, spoiler_text: spoiler, media_ids: mediasID},
             headers: {
                 'Authorization': `Bearer ${this.token}`
             }
@@ -80,6 +83,46 @@ class Mastodon {
             throw expect;
         }
     } 
+
+    async uploadMedia(stream, description="") {
+        const form = new formData();
+        form.append('file', stream);
+        form.append('description', description)
+        const headers = form.getHeaders();
+        headers["Authorization"] = `Bearer ${this.token}`;
+        const request = {
+            method: "POST",
+            url: `${this.apiURL}/api/v1/media`,
+            headers,
+            data: form
+        }
+        try {
+            const attachment = await axios(request);
+            return new Attachment(attachment.data);
+        } catch (expect) {
+            throw expect;
+        }
+    }
+
+    async updateMedia(id, description="") {
+        const form = new formData();
+        form.append('description', description);
+        const headers = form.getHeaders();
+        headers['Authorization'] = `Bearer ${this.token}`;
+        const request = {
+            method: "PUT",
+            url: `${this.apiURL}/api/v1/media/${id}`,
+            headers,
+            data: form
+        }
+        try {
+            const attachment = await axios(request);
+            return new Attachment(attachment.data);
+        } catch(expect) {
+            throw expect;
+        }
+    }
+
 }
 
 module.exports = {
