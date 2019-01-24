@@ -1,10 +1,10 @@
 {
   "name": "donjs",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "NodeJS Mastodon Library",
   "main": "./index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "eslint": "eslint --fix lib index.js && echo \"\u001b[1m\u001b[32mOK\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mNot OK\u001b[39m\u001b[22m\""
   },
   "repository": {
     "type": "git",
@@ -13,11 +13,11 @@
   "keywords": [
     "api",
     "mastodon",
-    "tootjs",
+    "donjs",
     "wrapper",
     "toot"
   ],
-  "author": "HedariKun",
+  "author": "hedari",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",

@@ -1,4 +1,4 @@
-declare module "danjs" {
+declare module "donjs" {
     interface IStatus {
         id: Number,
         uri: String,
