@@ -4,6 +4,4 @@ class Emoji {
     }
 }
 
-module.exports = {
-    Emoji
-}
+module.exports = Emoji;

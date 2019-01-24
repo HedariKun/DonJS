@@ -4,6 +4,4 @@ class Mention {
     }
 }
 
-module.exports = {
-    Mention
-}
+module.exports = Mention;

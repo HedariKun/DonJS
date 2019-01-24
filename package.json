@@ -1,14 +1,24 @@
 {
   "name": "tootjs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "NodeJS Mastodon Library",
+  "main": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HedariKun/TootJS.git"
+  },
+  "keywords": [
+    "api",
+    "mastodon",
+    "tootjs",
+    "wrapper",
+    "toot"
+  ],
+  "author": "HedariKun",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
     "form-data": "^2.3.3"

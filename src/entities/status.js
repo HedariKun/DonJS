@@ -1,12 +1,12 @@
-const {Account} = require("./account"),
-      {Emoji} = require("./emoji"),
-      {Attachment} = require("./attachment"),
-      {Mention} = require("./mention"),
-      {Tag} = require("./tag"),
-      {Application} = require("./application"),
-      {Report} = require("./report"),
-      {Context} = require("./context"),
-      {Card} = require("./card"),
+const Account = require("./account"),
+      Emoji = require("./emoji"),
+      Attachment = require("./attachment"),
+      Mention = require("./mention"),
+      Tag = require("./tag"),
+      Application = require("./application"),
+      Report = require("./report"),
+      Context = require("./context"),
+      Card = require("./card"),
       axios = require("axios");
 
 class Status {
@@ -50,8 +50,8 @@ class Status {
         this.pinned = data.pinned;
     }
 
-    async reply(status, sensitive = false, spoiler = false) {
-        const instance = require("../mastodon").Mastodon.getInstance();
+    async reply(status, sensitive = false, spoiler=false) {
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/statuses`,
@@ -69,7 +69,7 @@ class Status {
     }
 
     async delete() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "DELETE",
             url: `${instance.apiURL}/api/v1/statuses/${this.id}`,
@@ -85,7 +85,7 @@ class Status {
     }
 
     async reblogStatus() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/statuses/${this.id}/reblog`,
@@ -102,7 +102,7 @@ class Status {
     }
 
     async unreblogStatus() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/statuses/${this.id}/unreblog`,
@@ -119,7 +119,7 @@ class Status {
     }
 
     async favouriteStatus() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/statuses/${this.id}/favourite`,
@@ -136,7 +136,7 @@ class Status {
     }
 
     async unfavouriteStatus() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/statuses/${this.id}/unfavourite`,
@@ -153,7 +153,7 @@ class Status {
     }
 
     async pinStatus() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/statuses/${this.id}/pin`,
@@ -170,7 +170,7 @@ class Status {
     }
 
     async unpingStatus() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/statuses/${this.id}/unpin`,
@@ -187,7 +187,7 @@ class Status {
     }
 
     async muteStatus() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/statuses/${this.id}/mute`,
@@ -204,7 +204,7 @@ class Status {
     }
 
     async unmuteStatus() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/statuses/${this.id}/unmute`,
@@ -221,7 +221,7 @@ class Status {
     }
 
     async report(comment) {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/reports`,
@@ -243,7 +243,7 @@ class Status {
     }
 
     async getContext() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "GET",
             url: `${instance.apiURL}/api/v1/statuses/${this.id}/context`
@@ -257,7 +257,7 @@ class Status {
     }
     
     async getCard() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
 
         const request = {
             method: "GET",
@@ -265,7 +265,6 @@ class Status {
         }
         try {
             const card = await axios(request);
-            console.log(request.url);
             return new Card(card.data);
         } catch(expect) {
             throw expect;
@@ -274,6 +273,4 @@ class Status {
 
 }
 
-module.exports = {
-    Status
-}
+module.exports = Status;

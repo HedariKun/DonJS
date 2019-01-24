@@ -1,14 +1,14 @@
 const axios = require("axios"),
-     {Status} = require("./entities/status"),
-     {Account} = require("./entities/account"),
-     {Attachment} = require("./entities/attachment"),
+     Status = require("./entities/status"),
+     Account = require("./entities/account"),
+     Attachment = require("./entities/attachment"),
      formData = require("form-data");
 
 let instance;
 
-class Mastodon {
+class Client {
     constructor(config) {
-        this.apiURL = config.apiURL;
+        this.apiUrl = config.apiUrl;
         this.token = config.token;
         instance = this;
     }
@@ -21,7 +21,7 @@ class Mastodon {
         const mediasID = attachments === null ? [] : attachments.map(x => x.id);
         const request = {
             method: "POST",
-            url: `${this.apiURL}/api/v1/statuses`,
+            url: `${this.apiUrl}/api/v1/statuses`,
             data: {status, sensitive, spoiler_text: spoiler, media_ids: mediasID},
             headers: {
                 'Authorization': `Bearer ${this.token}`
@@ -38,7 +38,7 @@ class Mastodon {
     async getClientAccount() {
         const request = {
             method: "GET",
-            url: `${this.apiURL}/api/v1/accounts/verify_credentials`,
+            url: `${this.apiUrl}/api/v1/accounts/verify_credentials`,
             headers: {
                 'Authorization': `Bearer ${this.token}`
             }
@@ -54,7 +54,7 @@ class Mastodon {
     async getAccountByID(id) {
         const request = {
             method: "GET",
-            url: `${this.apiURL}/api/v1/accounts/${id}`,
+            url: `${this.apiUrl}/api/v1/accounts/${id}`,
             headers: {
                 'Authorization': `Bearer ${this.token}`
             }
@@ -70,7 +70,7 @@ class Mastodon {
     async followRemoteAccount(uri) {
         const request = {
             method: "POST",
-            url: `${this.apiURL}/api/v1/follows`,
+            url: `${this.apiUrl}/api/v1/follows`,
             data: {uri},
             headers: {
                 'Authorization': `Bearer ${this.token}`
@@ -92,7 +92,7 @@ class Mastodon {
         headers["Authorization"] = `Bearer ${this.token}`;
         const request = {
             method: "POST",
-            url: `${this.apiURL}/api/v1/media`,
+            url: `${this.apiUrl}/api/v1/media`,
             headers,
             data: form
         }
@@ -111,7 +111,7 @@ class Mastodon {
         headers['Authorization'] = `Bearer ${this.token}`;
         const request = {
             method: "PUT",
-            url: `${this.apiURL}/api/v1/media/${id}`,
+            url: `${this.apiUrl}/api/v1/media/${id}`,
             headers,
             data: form
         }
@@ -126,7 +126,7 @@ class Mastodon {
     async getStatusByID(id) {
         const request = {
             method: "GET",
-            url: `${this.apiURL}/api/v1/statuses/${id}`,
+            url: `${this.apiUrl}/api/v1/statuses/${id}`,
         }
 
         try {
@@ -139,7 +139,4 @@ class Mastodon {
 
 }
 
-module.exports = {
-    Mastodon,
-    something: "hello"
-}
+module.exports = Client;

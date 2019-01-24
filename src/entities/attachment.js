@@ -11,6 +11,4 @@ class Attachment {
     }
 }
 
-module.exports = {
-    Attachment
-}
+module.exports = Attachment;

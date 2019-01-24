@@ -13,6 +13,4 @@ class Relationship {
     }
 }
 
-module.exports = {
-    Relationship
-}
+module.exports = Relationship;

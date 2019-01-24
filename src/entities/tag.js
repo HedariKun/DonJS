@@ -4,6 +4,4 @@ class Tag {
     }
 }
 
-module.exports = {
-    Tag
-}
+module.exports = Tag;

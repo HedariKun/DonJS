@@ -5,6 +5,4 @@ class Application {
     }
 }
 
-module.exports = {
-    Application
-}
+module.exports = Application;

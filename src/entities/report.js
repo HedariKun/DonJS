@@ -5,6 +5,4 @@ class Report {
     }
 }
 
-module.exports = {
-    Report
-}
+module.exports = Report;

@@ -1,5 +1,5 @@
-const {Emoji} = require("./emoji"),
-      {Relationship} = require("./relationship")
+const Emoji = require("./emoji"),
+      Relationship = require("./relationship")
       axios = require("axios");
 
 class Account {
@@ -30,7 +30,7 @@ class Account {
     
 
     async getFollowers(limit = 40) {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "GET",
             url: `${instance.apiURL}/api/v1/accounts/${this.id}/followers?limit=${limit}`,
@@ -47,7 +47,7 @@ class Account {
     }
 
     async getFollowing(limit = 40) {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "GET",
             url: `${instance.apiURL}/api/v1/accounts/${this.id}/following?limit=${limit}`,
@@ -64,7 +64,7 @@ class Account {
     }
 
     async getStatuses(limit = 20, mediaOnly=false, pinned=false, excludeReply=false) {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "GET",
             url: `${instance.apiURL}/api/v1/accounts/${this.id}/statuses?limit=${limit}&only_media=${mediaOnly}&pinned=${pinned}&exclude_replies=${excludeReply}`,
@@ -81,7 +81,7 @@ class Account {
     }
 
     async followAccount(showReblog = false) {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/accounts/${this.id}/follow`,
@@ -99,7 +99,7 @@ class Account {
     }
     
     async unfollowAccount() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/accounts/${this.id}/unfollow`,
@@ -116,7 +116,7 @@ class Account {
     }
 
     async blockAccount() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/accounts/${this.id}/block`,
@@ -133,7 +133,7 @@ class Account {
     }
 
     async unblockAccount() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/accounts/${this.id}/unblock`,
@@ -150,7 +150,7 @@ class Account {
     }
 
     async endorsingAccount() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/accounts/${this.id}/pin`,
@@ -167,7 +167,7 @@ class Account {
     }
 
     async unendorsingAccount() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/accounts/${this.id}/unpin`,
@@ -184,7 +184,7 @@ class Account {
     }
 
     async muteAccount (muteNotification=true) {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/accounts/${this.id}/mute`,
@@ -202,7 +202,7 @@ class Account {
     }
 
     async unmuteAccount () {
-        const instance = require("../mastodon").Mastodon.getInstance();
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "POST",
             url: `${instance.apiURL}/api/v1/accounts/${this.id}/unmute`,
@@ -218,8 +218,8 @@ class Account {
         }
     }
 
-    async getRelationships() {
-        const instance = require("../mastodon").Mastodon.getInstance();
+    async getRelationship() {
+        const instance = require("../client").Mastodon.getInstance();
         const request = {
             method: "GET",
             url: `${instance.apiURL}/api/v1/accounts/relationships`,
@@ -238,6 +238,4 @@ class Account {
 
 }
 
-module.exports = {
-    Account
-}
+module.exports = Account;
