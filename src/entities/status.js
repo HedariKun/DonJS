@@ -45,16 +45,17 @@ class Status {
         for (const tag in data.tags) {
             this.tags.push(new Tag(tag));
         }
+        this.card = data.card;
         this.application = new Application(data.application);
         this.language = data.language;
         this.pinned = data.pinned;
     }
 
     async reply(status, sensitive = false, spoiler=false) {
-        const instance = require("../client").Mastodon.getInstance();
+        const instance = require("../client").getInstance();
         const request = {
             method: "POST",
-            url: `${instance.apiURL}/api/v1/statuses`,
+            url: `${instance.apiUrl}/api/v1/statuses`,
             data: {status, sensitive, spoiler_text: spoiler, in_reply_to_id:this.id},
             headers: {
                 'Authorization': `Bearer ${instance.token}`
@@ -69,10 +70,10 @@ class Status {
     }
 
     async delete() {
-        const instance = require("../client").Mastodon.getInstance();
+        const instance = require("../client").getInstance();
         const request = {
             method: "DELETE",
-            url: `${instance.apiURL}/api/v1/statuses/${this.id}`,
+            url: `${instance.apiUrl}/api/v1/statuses/${this.id}`,
             headers: {
                 'Authorization': `Bearer ${instance.token}`
             }
@@ -85,10 +86,10 @@ class Status {
     }
 
     async reblogStatus() {
-        const instance = require("../client").Mastodon.getInstance();
+        const instance = require("../client").getInstance();
         const request = {
             method: "POST",
-            url: `${instance.apiURL}/api/v1/statuses/${this.id}/reblog`,
+            url: `${instance.apiUrl}/api/v1/statuses/${this.id}/reblog`,
             headers: {
                 'Authorization': `Bearer ${instance.token}`
             }
@@ -102,10 +103,10 @@ class Status {
     }
 
     async unreblogStatus() {
-        const instance = require("../client").Mastodon.getInstance();
+        const instance = require("../client").getInstance();
         const request = {
             method: "POST",
-            url: `${instance.apiURL}/api/v1/statuses/${this.id}/unreblog`,
+            url: `${instance.apiUrl}/api/v1/statuses/${this.id}/unreblog`,
             headers: {
                 'Authorization': `Bearer ${instance.token}`
             }
@@ -119,10 +120,10 @@ class Status {
     }
 
     async favouriteStatus() {
-        const instance = require("../client").Mastodon.getInstance();
+        const instance = require("../client").getInstance();
         const request = {
             method: "POST",
-            url: `${instance.apiURL}/api/v1/statuses/${this.id}/favourite`,
+            url: `${instance.apiUrl}/api/v1/statuses/${this.id}/favourite`,
             headers: {
                 'Authorization': `Bearer ${instance.token}`
             }
@@ -136,10 +137,10 @@ class Status {
     }
 
     async unfavouriteStatus() {
-        const instance = require("../client").Mastodon.getInstance();
+        const instance = require("../client").getInstance();
         const request = {
             method: "POST",
-            url: `${instance.apiURL}/api/v1/statuses/${this.id}/unfavourite`,
+            url: `${instance.apiUrl}/api/v1/statuses/${this.id}/unfavourite`,
             headers: {
                 'Authorization': `Bearer ${instance.token}`
             }
@@ -153,10 +154,10 @@ class Status {
     }
 
     async pinStatus() {
-        const instance = require("../client").Mastodon.getInstance();
+        const instance = require("../client").getInstance();
         const request = {
             method: "POST",
-            url: `${instance.apiURL}/api/v1/statuses/${this.id}/pin`,
+            url: `${instance.apiUrl}/api/v1/statuses/${this.id}/pin`,
             headers: {
                 'Authorization': `Bearer ${instance.token}`
             }
@@ -170,10 +171,10 @@ class Status {
     }
 
     async unpingStatus() {
-        const instance = require("../client").Mastodon.getInstance();
+        const instance = require("../client").getInstance();
         const request = {
             method: "POST",
-            url: `${instance.apiURL}/api/v1/statuses/${this.id}/unpin`,
+            url: `${instance.apiUrl}/api/v1/statuses/${this.id}/unpin`,
             headers: {
                 'Authorization': `Bearer ${instance.token}`
             }
@@ -187,10 +188,10 @@ class Status {
     }
 
     async muteStatus() {
-        const instance = require("../client").Mastodon.getInstance();
+        const instance = require("../client").getInstance();
         const request = {
             method: "POST",
-            url: `${instance.apiURL}/api/v1/statuses/${this.id}/mute`,
+            url: `${instance.apiUrl}/api/v1/statuses/${this.id}/mute`,
             headers: {
                 'Authorization': `Bearer ${instance.token}`
             }
@@ -204,10 +205,10 @@ class Status {
     }
 
     async unmuteStatus() {
-        const instance = require("../client").Mastodon.getInstance();
+        const instance = require("../client").getInstance();
         const request = {
             method: "POST",
-            url: `${instance.apiURL}/api/v1/statuses/${this.id}/unmute`,
+            url: `${instance.apiUrl}/api/v1/statuses/${this.id}/unmute`,
             headers: {
                 'Authorization': `Bearer ${instance.token}`
             }
@@ -221,10 +222,10 @@ class Status {
     }
 
     async report(comment) {
-        const instance = require("../client").Mastodon.getInstance();
+        const instance = require("../client").getInstance();
         const request = {
             method: "POST",
-            url: `${instance.apiURL}/api/v1/reports`,
+            url: `${instance.apiUrl}/api/v1/reports`,
             data: {
                 'account_id': this.account.id,
                 'status_ids': [this.id],
@@ -243,10 +244,10 @@ class Status {
     }
 
     async getContext() {
-        const instance = require("../client").Mastodon.getInstance();
+        const instance = require("../client").getInstance();
         const request = {
             method: "GET",
-            url: `${instance.apiURL}/api/v1/statuses/${this.id}/context`
+            url: `${instance.apiUrl}/api/v1/statuses/${this.id}/context`
         }
         try {
             const context = await axios(request);
@@ -257,11 +258,10 @@ class Status {
     }
     
     async getCard() {
-        const instance = require("../client").Mastodon.getInstance();
-
+        const instance = require("../client").getInstance();
         const request = {
             method: "GET",
-            url: `${instance.apiURL}/api/v1/statuses/${this.id}/card`
+            url: `${instance.apiUrl}/api/v1/statuses/${this.id}/card`
         }
         try {
             const card = await axios(request);

@@ -1,7 +1,7 @@
 class Application {
     constructor(data) {
-        // this.name = data.name;
-        // this.website = data.website;
+        this.name = data.name;
+        this.website = data.website;
     }
 }
 

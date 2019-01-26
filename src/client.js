@@ -104,25 +104,6 @@ class Client {
         }
     }
 
-    async updateMedia(id, description="") {
-        const form = new formData();
-        form.append('description', description);
-        const headers = form.getHeaders();
-        headers['Authorization'] = `Bearer ${this.token}`;
-        const request = {
-            method: "PUT",
-            url: `${this.apiUrl}/api/v1/media/${id}`,
-            headers,
-            data: form
-        }
-        try {
-            const attachment = await axios(request);
-            return new Attachment(attachment.data);
-        } catch(expect) {
-            throw expect;
-        }
-    }
-
     async getStatusByID(id) {
         const request = {
             method: "GET",
