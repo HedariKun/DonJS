@@ -149,12 +149,14 @@ declare module "donjs" {
         type: String
     }
     export class Client extends EventEmitter {
+        constructor(token:String, apiUrl:String);
         on(event: string, listener: Function): this;
         on(event: "ready", listener: (message: IReadyType) => void) : this;
         on(event: "onStatus", listener: (status: Status) => void): this;
         on(event: "onStatusDelete", listener: (statusID: String) => void): this;
-        on(event: "onNotification", listener: (notification: Notification) => void): this; 
-        constructor(token:String, apiUrl:String);
+        on(event: "onNotification", listener: (notification: Notification) => void): this;
+        public listenForNotifications(): void;
+        public listenForStatuses(): void;
         public getInstance() : Client;
         public sendStatus(status:String, attachments:[Attachment], sensitive:Boolean, spoiler:Boolean): Promise<Status>;
         public getClientAccount():Promise<Account>;
