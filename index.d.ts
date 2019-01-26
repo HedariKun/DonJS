@@ -1,6 +1,6 @@
 declare module "donjs" {
     
-    import {EventEmitter} from "events"
+    import {EventEmitter} from "events";
 
     interface IStatus {
         id: String,
