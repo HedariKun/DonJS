@@ -22,7 +22,6 @@ class Client extends EventEmitter {
         const ws = new (require("ws"))(`${wsurl}/api/v1/streaming?access_token=${this.token}&stream=public`);
         ws.on("message", (data) => {
             const dataObject = JSON.parse(data);
-            console.log(dataObject.event);
             if (dataObject.event == "update") {
                 this.emit("onStatus", new Status(JSON.parse(dataObject.payload)));
             } else if (dataObject.event == "delete") {
@@ -33,7 +32,7 @@ class Client extends EventEmitter {
             this.emit("ready", {type: "statuses"})
         })
         ws.on("error", error => {
-            console.log(error);
+            throw error;
         })
     }
 
@@ -42,7 +41,6 @@ class Client extends EventEmitter {
         const ws = new (require("ws"))(`${wsurl}/api/v1/streaming?access_token=${this.token}&stream=user`);
         ws.on("message", (data) => {
             const dataObject = JSON.parse(data);
-            console.log(dataObject.event);
             if (dataObject.event == "notification") {
                 this.emit("onNotification", new Notification(JSON.parse(dataObject.payload)))
             }
@@ -51,7 +49,7 @@ class Client extends EventEmitter {
             this.emit("ready", {type: "notification"})
         })
         ws.on("error", error => {
-            console.log(error);
+            throw error;
         })
     }
 
