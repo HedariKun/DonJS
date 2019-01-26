@@ -1,5 +1,6 @@
 const Emoji = require("./emoji"),
-      Relationship = require("./relationship")
+      Relationship = require("./relationship"),
+      Field = require("./field"),
       axios = require("axios");
 
 class Account {
@@ -24,7 +25,7 @@ class Account {
             this.emojis.push(new Emoji(emoji));
         }
         this.moved = data.moved;
-        this.fields = data.fields;
+        this.fields = data.fields == null ? null : data.fields.map(x => new Field(x));
         this.bot = data.bot;
     }
     

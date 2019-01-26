@@ -23,7 +23,7 @@ declare module "donjs" {
         mentions: [Mention],
         tags: [ITag],
         card?: Card,
-        application: IApplication,
+        application: Application,
         language?: String,
         pinned?: Boolean
     }
@@ -34,7 +34,15 @@ declare module "donjs" {
     }
 
     interface ITag {
+        name: String,
+        url: String,
+        histroy?: History
+    }
 
+    interface IHistory {
+        day: String,
+        uses: Number,
+        accounts: Number,
     }
 
     interface IMention {
@@ -62,7 +70,7 @@ declare module "donjs" {
         headerStatic:String,
         emojis: [Emoji],
         moved?: Account,
-        fields?: [IField], // Add field data type later
+        fields?: [Field],
         bot?: Boolean
     }
 
@@ -80,12 +88,14 @@ declare module "donjs" {
         remoteUrl: String,
         previewUrl: String,
         textUrl: String,
-        meta: IField,
+        meta: String,
         description: String
     }
 
     interface IField {
-
+        name: String,
+        value: String,
+        verifiedAt?: String
     }
 
     interface IReport {
@@ -161,7 +171,7 @@ declare module "donjs" {
         mentions: [Mention];
         tags: [ITag];
         card?: Card;
-        application: IApplication;
+        application: Application;
         language?: String;
         pinned?: Boolean;
 
@@ -198,7 +208,7 @@ declare module "donjs" {
         headerStatic: String;
         emojis: [Emoji];
         moved?: Account;
-        fields?: [IField];
+        fields?: [Field];
         bot?: Boolean;
         public getFollowers(limit?:Number):Promise<[Account]>;
         public getFollowing(limit?:Number):Promise<[Account]>;
@@ -221,7 +231,7 @@ declare module "donjs" {
         remoteUrl: String;
         previewUrl: String;
         textUrl: String;
-        meta: IField;
+        meta: String;
         description: String;
         update(description:String):Attachment;
     }
@@ -271,6 +281,29 @@ declare module "donjs" {
         staticUrl: String;
         url: String;
         visibleInPicker: String;
+    }
+
+    export class Application implements IApplication {
+        name: String;        
+        website: String;
+    }
+
+    export class Tag implements ITag {
+        name: String;      
+        url: String;
+        histroy?: History | undefined;
+    }
+
+    export class History implements IHistory {
+        day: String;       
+        uses: Number;
+        accounts: Number;
+    }
+
+    export class Field implements IField {
+        name: String;        
+        value: String;
+        verifiedAt?: String | undefined;
     }
 
 }
