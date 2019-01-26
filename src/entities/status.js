@@ -39,14 +39,14 @@ class Status {
         }
         this.mentions = [];
         for (const mention in data.mentions) {
-            this.mention.push(new Mention(mention));
+            this.mentions.push(new Mention(mention));
         }
         this.tags = [];
         for (const tag in data.tags) {
             this.tags.push(new Tag(tag));
         }
         this.card = data.card;
-        this.application = new Application(data.application);
+        this.application = data.application == null ? null : new Application(data.application);
         this.language = data.language;
         this.pinned = data.pinned;
     }

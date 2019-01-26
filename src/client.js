@@ -2,15 +2,57 @@ const axios = require("axios"),
      Status = require("./entities/status"),
      Account = require("./entities/account"),
      Attachment = require("./entities/attachment"),
-     formData = require("form-data");
+     formData = require("form-data"),
+     Notification = require("./entities/notification"),
+     ws = require("ws"),
+     EventEmitter = require("events");
 
 let instance;
 
-class Client {
+class Client extends EventEmitter {
     constructor(token, apiUrl) {
+        super();
         this.apiUrl = apiUrl;
         this.token = token;
         instance = this;
+    }
+
+    listenForStatuses() {
+        const wsurl = this.apiUrl.startsWith("https://") ? this.apiUrl.replace("https://", "wss://") : `wss://${this.apiUrl}`;
+        const ws = new (require("ws"))(`${wsurl}/api/v1/streaming?access_token=${this.token}&stream=public`);
+        ws.on("message", (data) => {
+            const dataObject = JSON.parse(data);
+            console.log(dataObject.event);
+            if (dataObject.event == "update") {
+                this.emit("onStatus", new Status(JSON.parse(dataObject.payload)));
+            } else if (dataObject.event == "delete") {
+                this.emit("onStatusDelete", dataObject.payload);
+            }
+        })
+        ws.on('open', () =>{
+            this.emit("ready", {type: "statuses"})
+        })
+        ws.on("error", error => {
+            console.log(error);
+        })
+    }
+
+    listenForNotifications() {
+        const wsurl = this.apiUrl.startsWith("https://") ? this.apiUrl.replace("https://", "wss://") : `wss://${this.apiUrl}`;
+        const ws = new (require("ws"))(`${wsurl}/api/v1/streaming?access_token=${this.token}&stream=user`);
+        ws.on("message", (data) => {
+            const dataObject = JSON.parse(data);
+            console.log(dataObject.event);
+            if (dataObject.event == "notification") {
+                this.emit("onNotification", new Notification(JSON.parse(dataObject.payload)))
+            }
+        })
+        ws.on('open', () =>{
+            this.emit("ready", {type: "notification"})
+        })
+        ws.on("error", error => {
+            console.log(error);
+        })
     }
 
     static getInstance() {

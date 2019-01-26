@@ -5,3 +5,5 @@ class Field {
         this.verifiedAt = data.verified_at;
     }
 }
+
+module.exports = Field;

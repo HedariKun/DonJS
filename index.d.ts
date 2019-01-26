@@ -1,4 +1,7 @@
 declare module "donjs" {
+    
+    import {EventEmitter} from "events"
+
     interface IStatus {
         id: String,
         uri: String,
@@ -135,8 +138,22 @@ declare module "donjs" {
         endorsed: Boolean,
     }
 
-
-    export class Client {
+    interface INotification {
+        id: String,
+        type: String,
+        createdAt: String,
+        account: Account,
+        status?: Status
+    }
+    interface IReadyType {
+        type: String
+    }
+    export class Client extends EventEmitter {
+        on(event: string, listener: Function): this;
+        on(event: "ready", listener: (message: IReadyType) => void) : this;
+        on(event: "onStatus", listener: (status: Status) => void): this;
+        on(event: "onStatusDelete", listener: (statusID: String) => void): this;
+        on(event: "onNotification", listener: (notification: Notification) => void): this; 
         constructor(token:String, apiUrl:String);
         public getInstance() : Client;
         public sendStatus(status:String, attachments:[Attachment], sensitive:Boolean, spoiler:Boolean): Promise<Status>;
@@ -306,4 +323,11 @@ declare module "donjs" {
         verifiedAt?: String | undefined;
     }
 
+    export class Notification implements INotification{
+        id: String;        
+        type: String;
+        createdAt: String;
+        account: Account;
+        status?: Status | undefined;
+    }
 }
