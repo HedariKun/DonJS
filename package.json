@@ -1,6 +1,6 @@
 {
   "name": "donjs",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "NodeJS Mastodon Library",
   "main": "./index.js",
   "scripts": {

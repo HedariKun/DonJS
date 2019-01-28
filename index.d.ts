@@ -21,7 +21,7 @@ declare module "donjs" {
         muted?: Boolean,
         sensitive: Boolean,
         spoilerText: String,
-        visibility: String, //Change this in future to enum
+        visibility: StatusVisibilities,
         mediaAttachments: [Attachment],
         mentions: [Mention],
         tags: [ITag],
@@ -86,7 +86,7 @@ declare module "donjs" {
 
     interface IAttachment {
         id: String,
-        type: String,
+        type: AttachmentTypes,
         url: String,
         remoteUrl: String,
         previewUrl: String,
@@ -115,7 +115,7 @@ declare module "donjs" {
         title: String,
         description: String,
         image?: String,
-        type: String,
+        type: CardTypes,
         authorName?: String,
         authorUrl?: String,
         providerName?: String,
@@ -140,7 +140,7 @@ declare module "donjs" {
 
     interface INotification {
         id: String,
-        type: String,
+        type: NotificationTypes,
         createdAt: String,
         account: Account,
         status?: Status
@@ -185,7 +185,7 @@ declare module "donjs" {
         muted?: Boolean;
         sensitive: Boolean;
         spoilerText: String;
-        visibility: String;
+        visibility: StatusVisibilities;
         mediaAttachments: [Attachment];
         mentions: [Mention];
         tags: [ITag];
@@ -245,7 +245,7 @@ declare module "donjs" {
 
     export class Attachment implements IAttachment {
         id: String;        
-        type: String;
+        type: AttachmentTypes;
         url: String;
         remoteUrl: String;
         previewUrl: String;
@@ -260,7 +260,7 @@ declare module "donjs" {
         title: String;
         description: String;
         image?: String | undefined;
-        type: String;
+        type: CardTypes;
         authorName?: String;
         authorUrl?: String;
         providerName?: String;
@@ -327,9 +327,38 @@ declare module "donjs" {
 
     export class Notification implements INotification{
         id: String;        
-        type: String;
+        type: NotificationTypes;
         createdAt: String;
         account: Account;
         status?: Status | undefined;
     }
+
+    enum AttachmentTypes {
+        unkown = "unkown",
+        image = "image",
+        gifv = "gifv",
+        video = "video"
+    }
+
+    enum CardTypes {
+        link = "link",
+        photo = "photo",
+        video = "video",
+        rich = "rich"
+    }
+
+    enum NotificationTypes {
+        follow = "follow",
+        mention = "mention",
+        reblog = "reblog",
+        favourite = "favourite",
+    }
+
+    enum StatusVisibilities {
+        public = "public",
+        unlisted = "unlisted",
+        private = "private",
+        direct = "direct"
+    }
+
 }

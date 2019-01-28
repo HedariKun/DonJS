@@ -21,7 +21,7 @@ class Status {
         this.content = data.content;
         this.createdAt = data.createdAt;
         this.emojis = [];
-        for (const emoji in data.emojis) {
+        for (const emoji of data.emojis) {
             this.emojis.push(new Emoji(emoji));
         }
         this.repliesCount = data.replies_count;
