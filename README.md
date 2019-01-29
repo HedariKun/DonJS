@@ -1,4 +1,4 @@
-# DonJS [![CodeFactor](https://www.codefactor.io/repository/github/hedarikun/donjs/badge)]
+# DonJS ![CodeFactor](https://www.codefactor.io/repository/github/hedarikun/donjs/badge)
 DonJS is a javascript library to create Mastodon bots
 
 # How to start
