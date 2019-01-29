@@ -7,7 +7,7 @@ DonJS is a javascript library to create Mastodon bots
 3. then run ```npm init -y``` command. 
 4. after that you need to install the library by running ```npm install donjs```
 
-to visit the documentation [click here](wiki)
+to visit the documentation [click here](https://www.github.com/hedarikun/donjs/wiki)
 
 # Examples
 One of the basic examples on how to use this library is
