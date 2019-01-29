@@ -56,7 +56,7 @@ class Client extends EventEmitter {
 		return instance;
 	}
 
-	async sendStatus(status, attachments=null, sensitive = false, spoiler = false) {
+	async sendStatus(status, attachments = null, sensitive = false, spoiler = false) {
 		const mediasID = attachments === null ? [] : attachments.map(x => x.id);
 		const request = {
 			method: "POST",
